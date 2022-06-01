@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # THis test script seems to work well streaming and trasncoding video into H264 and AAC on the RPI
 
 library="/tmp/localnews"
