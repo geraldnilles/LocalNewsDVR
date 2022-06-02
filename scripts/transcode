@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+####################
+# THis script transcodes the TV stream from MPEG2 to AVC.  It passes the output
+# into a pipe using an MPEGTS format.  
+######################################
+
+rm /tmp/pipe1
+
+mkfifo /tmp/pipe1
+
+ffmpeg \
+    -i http://10.0.0.240:5004/auto/v2.1 \
+    -t 60 \
+    -num_capture_buffers 64 \
+    -c:a aac \
+    -ac 2 \
+    -c:v h264_v4l2m2m \
+    -b:v 5M \
+    -f mpegts \
+    pipe: > /tmp/pipe1 
+

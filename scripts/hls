@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+########################
+# This script reads the Pipe data and packages it into an HLS format for
+# streaming
+###################
+
+SCRIPTDIR=$( pwd )
+
+library="/tmp/localnews"
+mkdir -p $library
+cd $library
+
+TIMECODE=$( date +%y%m%d%H )
+
+mkdir -p $TIMECODE
+
+cd $TIMECODE
+
+rm *
+
+$SCRIPTDIR/packager \
+  'in=/tmp/localnewspipe,stream=audio,segment_template=audio_$Number$.aac,playlist_name=audio.m3u8,hls_group_id=audio,hls_name=ENGLISH' \
+  'in=/tmp/localnewspipe,stream=video,segment_template=video_$Number$.ts,playlist_name=video.m3u8,iframe_playlist_name=iframe.m3u8' \
+  --io_block_size 65536 \
+  --segment_duration 10 \
+  --hls_master_playlist_output out.m3u8 \
+  --hls_playlist_type EVENT
+
