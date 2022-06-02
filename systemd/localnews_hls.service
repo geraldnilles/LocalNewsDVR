@@ -1,0 +1,10 @@
+[Unit]
+Description=Local News Video Packager Script
+
+[Service]
+Type=oneshot
+ExecStart=/opt/LocalNewsDVR/scripts/hls
+
+[Install]
+WantedBy=multi-user.target
+

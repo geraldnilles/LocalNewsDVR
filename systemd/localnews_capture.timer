@@ -1,0 +1,12 @@
+[Unit]
+Description=Initiates the TV recording at a particular time of day
+
+[Timer]
+# At 7am every day
+# OnCalendar=*-*-* 07:00:00
+# Every Hour
+OnCalendar=*-*-* *:00:00
+
+[Install]
+WantedBy=timers.target
+

@@ -1,0 +1,13 @@
+[Unit]
+Description=Local News DVR Web Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/LocalNewsDVR/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

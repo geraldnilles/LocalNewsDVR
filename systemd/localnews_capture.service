@@ -1,0 +1,11 @@
+[Unit]
+Description=Local News Video Capture Script
+Requires="localnews_packager.service"
+
+[Service]
+Type=oneshot
+ExecStart=/opt/LocalNewsDVR/scripts/capture
+
+[Install]
+WantedBy=multi-user.target
+
