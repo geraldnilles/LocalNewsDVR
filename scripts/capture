@@ -4,6 +4,8 @@
 # into a pipe using an MPEGTS format.  
 ######################################
 
+cd "$(dirname "$0")"
+
 MYPIPE="/tmp/localnewspipe"
 
 if [[ -f $MYPIPE ]]

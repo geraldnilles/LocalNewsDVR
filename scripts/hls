@@ -4,8 +4,9 @@
 # streaming
 ###################
 
-SCRIPTDIR=$( pwd )
+cd "$(dirname "$0")"
 
+SCRIPTDIR=$( pwd )
 
 library="/mnt/library"
 mkdir -p $library
