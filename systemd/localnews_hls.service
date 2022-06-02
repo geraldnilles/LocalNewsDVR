@@ -5,6 +5,4 @@ Description=Local News Video Packager Script
 Type=simple
 ExecStart=/opt/LocalNewsDVR/scripts/hls
 
-[Install]
-WantedBy=multi-user.target
 
