@@ -28,7 +28,7 @@ def create_app(test_config=None):
 
     @app.route('/video/<path:filename>')
     def library(filename):
-        return send_from_directory("/tmp/localnews",filename)
+        return send_from_directory("/mnt/library",filename, cache_timeout=0)
 
     return app
 
