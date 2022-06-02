@@ -3,7 +3,7 @@ Description=Local News Video Capture Script
 Requires="localnews_hls.service"
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/opt/LocalNewsDVR/scripts/capture
 
 [Install]

@@ -2,7 +2,7 @@
 Description=Local News Video Packager Script
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/opt/LocalNewsDVR/scripts/hls
 
 [Install]
