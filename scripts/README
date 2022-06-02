@@ -1,0 +1,4 @@
+THe Packager is a binary pulled from https://github.com/shaka-project/shaka-packager
+
+Eventually, I'd like to create a separate package, but for now, i'll just embed
+the binary
