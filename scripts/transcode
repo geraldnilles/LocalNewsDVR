@@ -4,13 +4,13 @@
 # into a pipe using an MPEGTS format.  
 ######################################
 
-rm /tmp/pipe1
+rm /tmp/localnewspipe
 
-mkfifo /tmp/pipe1
+mkfifo /tmp/localnewspipe
 
 ffmpeg \
-    -i http://10.0.0.240:5004/auto/v2.1 \
-    -t 60 \
+    -i http://HDHR-10685C23.lan:5004/auto/v2.1 \
+    -t 300 \
     -num_capture_buffers 64 \
     -c:a aac \
     -ac 2 \
