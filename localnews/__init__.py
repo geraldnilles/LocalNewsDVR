@@ -49,6 +49,9 @@ def create_app(test_config=None):
 
         cast = chromecasts[0]
         cast.wait()
+        cast.quit_app()
+
+        time.sleep(3)
 
         mc = cast.media_controller
         mc.play_media("http://"+socket.gethostname()+".lan:8082/video/"+name+"/out.m3u8", 'application/x-mpegURL')
