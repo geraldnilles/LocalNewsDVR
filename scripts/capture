@@ -16,6 +16,8 @@ else
 fi
 
 ffmpeg \
+    -y \
+    -loglevel error \
     -i http://HDHR-10685C23.lan:5004/auto/v2.1 \
     -t 300 \
     -num_capture_buffers 64 \
