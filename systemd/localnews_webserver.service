@@ -2,6 +2,8 @@
 Description=Local News DVR Web Server
 After=network-online.target
 Wants=network-online.target
+Wants=localnews_capture.timer
+Before=localnews_capture.timer
 
 [Service]
 Type=simple
