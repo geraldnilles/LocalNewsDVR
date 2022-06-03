@@ -6,6 +6,3 @@ Requires=localnews_hls.service
 Type=simple
 ExecStart=/opt/LocalNewsDVR/scripts/capture
 
-[Install]
-WantedBy=multi-user.target
-
