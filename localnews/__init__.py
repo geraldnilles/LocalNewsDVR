@@ -23,7 +23,11 @@ def create_app(test_config=None):
     @app.route('/')
     @app.route('/html')
     def main():
-        recordings = ["05/31","06/01"] 
+        recordings = [] 
+        libpath = os.path.abspath( "/mnt/library" )
+        for f in os.listdir( libpath ):
+            if os.path.isdir( os.path.join( libpath,f ) ):
+                recordings.append( f )
         return render_template('main.html', shows=recordings )
 
     @app.route('/video/<path:filename>')
