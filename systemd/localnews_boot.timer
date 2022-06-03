@@ -1,0 +1,7 @@
+[Unit]
+Description=Kicks off the Periodic DVR Timer
+
+[Timer]
+OnBootSec=1min
+Unit=localnews_capture.timer
+
