@@ -12,27 +12,23 @@ library="/mnt/library"
 mkdir -p $library
 cd $library
 
-# Generate a folder to hold the new TV recording
-TIMECODE=$( date +%y%m%d%H )
-mkdir -p $TIMECODE
-cd $TIMECODE
-rm *
 
-# Create a pipe if it does not already exist
-MYPIPE="/tmp/localnewspipe"
-if [[ -f $MYPIPE ]]
-then
-	echo "Pipe Already exists"
-else
-	mkfifo $MYPIPE
-fi
+for tsfile in $( ls *.ts )
+do
+
+folder="${tsfile%.*}"
+
+cd $folder
+
+# TODO Package as an MP4 first to "clean up" the slop
 
 # Start converting the video stream into an HLS video
 $SCRIPTDIR/packager \
-  "in=$MYPIPE,stream=audio,segment_template=audio_\$Number\$.aac,playlist_name=audio.m3u8,hls_group_id=audio,hls_name=ENGLISH" \
-  "in=$MYPIPE,stream=video,segment_template=video_\$Number\$.ts,playlist_name=video.m3u8,iframe_playlist_name=iframe.m3u8" \
+  "in=../$tsfile,stream=audio,segment_template=audio_\$Number\$.aac,playlist_name=audio.m3u8,hls_group_id=audio,hls_name=ENGLISH" \
+  "in=../$tsfile,stream=video,segment_template=video_\$Number\$.ts,playlist_name=video.m3u8" \
   --io_block_size 65536 \
   --segment_duration 10 \
   --hls_master_playlist_output out.m3u8 \
   --hls_playlist_type EVENT
 
+done

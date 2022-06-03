@@ -6,15 +6,13 @@
 
 cd "$(dirname "$0")"
 
-MYPIPE="/tmp/localnewspipe"
+library="/mnt/library"
+mkdir -p $library
+cd $library
 
-if [[ -f $MYPIPE ]]
-then
-	echo "Pipe Already exists"
-else
-	mkfifo $MYPIPE
-fi
+TIMECODE=$( date +%y%m%d%H )
 
+# Transcode and store as an MPEG-TS file on the disk
 ffmpeg \
     -y \
     -loglevel error \
@@ -27,5 +25,11 @@ ffmpeg \
     -c:v h264_v4l2m2m \
     -b:v 5M \
     -f mpegts \
-    pipe: > $MYPIPE
+    $TIMECODE.ts
+
+# Sleep for 5 minutes to allow the HLS package to do it's work
+sleep 300
+
+# After 5 minutes, no need ot keep the ts file anymore
+rm $TIMECODE.ts
 
