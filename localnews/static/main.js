@@ -6,8 +6,8 @@ function bind_show(){
         b.onclick = function(e){
             // Remove the on-click for now so that we cant add more buttons
             var value = e.target.closest("button").innerText;
-            var count = document.querySelector("input.episodeCount").value;
-            send_request("show/"+value+"/"+count);
+            // var count = document.querySelector("input.episodeCount").value;
+            send_request("play/"+value+"/Living Room TV");
         }
     }
 }
