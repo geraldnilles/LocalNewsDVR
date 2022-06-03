@@ -34,6 +34,11 @@ def create_app(test_config=None):
     def library(filename):
         return send_from_directory("/mnt/library",filename, cache_timeout=0)
 
+
+    @app.route('/play/<name>/<device>',methods=['GET'])
+    def play(name,device):
+        return "Playing "+name+" on "+device
+
     return app
 
 
