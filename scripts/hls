@@ -4,31 +4,34 @@
 # streaming
 ###################
 
-cd "$(dirname "$0")"
-
-SCRIPTDIR=$( pwd )
-
-library="/mnt/library"
-mkdir -p $library
-cd $library
 
 
-for tsfile in $( ls *.ts )
+TEMPDIR="/tmp/localnews"
+TIMECODE=$( date +%y%m%d )
+LIBRARY="/mnt/library"
+
+mkdir -p $LIBRARY
+
+# Look for any new segments
+for seg in $( ls $TEMPDIR/*.m4s | sort )
 do
 
-folder="${tsfile%.*}"
+	# Create a folder based on the date code 
+	mkdir -p $LIBRARY/$TIMECODE
+	cd $LIBRARY/$TIMECODE
+	# Concat the init.mp4 to the new segment and append it to the HLS recording
+	ffmpeg \
+		-i concat:$TEMPDIR/init.mp4\|$seg
+		-c:v copy \
+		-c:a copy \
+		-f hls \
+		-hls_time 10 \
+		-hls_playlist_type event \
+		-hls_flags append_list,omit_endlist \
+		out.m3u8
 
-cd $folder
-
-# TODO Package as an MP4 first to "clean up" the slop
-
-# Start converting the video stream into an HLS video
-$SCRIPTDIR/packager \
-  "in=../$tsfile,stream=audio,segment_template=audio_\$Number\$.aac,playlist_name=audio.m3u8,hls_group_id=audio,hls_name=ENGLISH" \
-  "in=../$tsfile,stream=video,segment_template=video_\$Number\$.ts,playlist_name=video.m3u8" \
-  --io_block_size 65536 \
-  --segment_duration 10 \
-  --hls_master_playlist_output out.m3u8 \
-  --hls_playlist_type EVENT
+	# Remove the segment when done
+	rm $seg
 
 done
+
