@@ -20,13 +20,18 @@
     <div class="text-center">
         <h2>Local News DVR</h2>
         <div class="pb-3">
+            <h4>Recorded Dates </h4>
             <!-- TODO Browse Videos in order to watch in chrome browser -->
             {% for show in shows %}
             <button class="btn-lg btn-primary show">{{ show }}</button>
             {% endfor %}
         </div>
         <div class="pb-3  " >
-		TODO Select Which Device to play
+                <h4>Select a device to use:</h4>
+		<div class="btn-group">
+		    <button class="btn btn-secondary active">Living Room TV</button>
+		    <button class="btn btn-secondary">Bedroom TV</button>
+		</div>
         </div>
     </div>
 </div>

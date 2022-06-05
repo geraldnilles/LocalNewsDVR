@@ -6,19 +6,35 @@
 # seems to address it.  No idea why, but it works
 ######################################
 
-TIMECODE=$( date +%y%m%d )
+
+
+TIMECODE=$( date +%b%d )
 LIBRARY="/mnt/library"
+
+mkdir -p $LIBRARY
+cd $LIBRARY
+
+# Delete all recordings older than 2.3 days
+for rec in $( ls $LIBRARY )
+do
+	age=$(( $(date +%s) - $( date +%s -r $rec ) ))
+	if [ $age -gt 200000 ]
+	then
+		rm -r $rec
+	fi
+done
 
 mkdir -p $LIBRARY/$TIMECODE
 cd $LIBRARY/$TIMECODE
 
+# Clear any files that are already in the folder
 rm *
 
 ffmpeg \
     -y \
     -loglevel error \
     -err_detect ignore_err \
-    -i "http://HDHR-10685C23.lan:5004/auto/v2.1" \
+    -i "http://HDHR-10685C23.lan:5004/auto/v7.1" \
     -t 3600 \
     -num_capture_buffers 64 \
     -c:a aac \
