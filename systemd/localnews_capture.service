@@ -1,6 +1,5 @@
 [Unit]
 Description=Local News Video Capture Script
-Requires=localnews_hls.service
 
 [Service]
 Type=simple

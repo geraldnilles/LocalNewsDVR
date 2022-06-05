@@ -1,36 +1,38 @@
 #!/usr/bin/env bash
 ####################
-# THis script transcodes the TV stream from MPEG2 to AVC.  It passes the output
-# into a pipe using an MPEGTS format.  
+# THis script transcodes and packages the recording into an HLS format
+# FOr whatever reason, directly using the hls output format causes issues
+# during playback.  By temporariliy using the NUT container in the pipe, it
+# seems to address it.  No idea why, but it works
 ######################################
 
+TIMECODE=$( date +%y%m%d )
+LIBRARY="/mnt/library"
 
-TEMPDIR="/tmp/localnews"
-mkdir -p $TEMPDIR
+mkdir -p $LIBRARY/$TIMECODE
+cd $LIBRARY/$TIMECODE
 
-cd $TEMPDIR
+rm *
 
-# Transcode and store as an MPEG-TS file on the disk
 ffmpeg \
     -y \
     -loglevel error \
     -err_detect ignore_err \
     -i "http://HDHR-10685C23.lan:5004/auto/v2.1" \
-    -t 600 \
+    -t 300 \
     -num_capture_buffers 64 \
     -c:a aac \
     -ac 2 \
     -c:v h264_v4l2m2m \
     -b:v 5M \
+    -f nut \
+    pipe: | ffmpeg \
+    -f nut \
+    -i pipe: \
+    -c:v copy \
+    -c:a copy \
     -f hls \
-    -hls_time 60 \
-    -hls_start_number_source epoch \
-    -hls_segment_type fmp4 \
-    temp.m3u8
-
-# Sleep for 5 minutes to allow the HLS packager to do it's work
-sleep 300
-
-# After 5 minutes, no need ot keep the ts file anymore
-rm *
+    -hls_time 10 \
+    -hls_playlist_type event \
+    out.m3u8
 

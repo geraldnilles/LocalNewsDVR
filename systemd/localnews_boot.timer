@@ -1,7 +1,7 @@
 [Unit]
-Description=Kicks off the Periodic DVR Timer
+Description=Prevents the DVR scheduler from starting within 5 minutes of bootup
 
 [Timer]
-OnBootSec=1min
+OnBootSec=5min
 Unit=localnews_capture.timer
 
