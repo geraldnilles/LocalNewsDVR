@@ -33,7 +33,6 @@ rm *
 ffmpeg \
     -y \
     -loglevel error \
-    -err_detect ignore_err \
     -i "http://HDHR-10685C23.lan:5004/auto/v7.1" \
     -t 3600 \
     -num_capture_buffers 64 \
@@ -45,7 +44,6 @@ ffmpeg \
     pipe: | ffmpeg \
     -y \
     -loglevel error \
-    -err_detect ignore_err \
     -f nut \
     -i pipe: \
     -c:v copy \
