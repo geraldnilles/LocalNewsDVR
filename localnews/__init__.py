@@ -5,6 +5,9 @@ from flask import Flask
 from flask import render_template
 from flask import send_from_directory
 
+import socket
+from castcontroller import client, Command
+
 from flask_cors import CORS
 
 def create_app(test_config=None):
@@ -39,31 +42,15 @@ def create_app(test_config=None):
     @app.route('/play/<name>/<device>',methods=['GET'])
     def play(name,device):
 
-        import pychromecast
-        import socket
+        client({"device":device, "cmd":Command.stop})
 
-        services, browser = pychromecast.discovery.discover_chromecasts()
-        pychromecast.discovery.stop_discovery(browser)
+        time.sleep(2)
 
-        chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[device])
+        client({"device":device, "cmd":Command.play, "args":["http://"+socket.gethostname()+".lan:8082/video/"+name+"/out.m3u8", 'application/x-mpegURL']})
 
-        cast = chromecasts[0]
-        cast.wait()
-        cast.quit_app()
+        time.sleep(2)
 
-        time.sleep(3)
-
-        mc = cast.media_controller
-        mc.play_media("http://"+socket.gethostname()+".lan:8082/video/"+name+"/out.m3u8", 'application/x-mpegURL')
-        mc.block_until_active()
-
-        # mc.pause()
-        time.sleep(5)
-        mc.seek(0)
-        mc.play()
-
-        # Shut down discovery
-        pychromecast.discovery.stop_discovery(browser)
+        client({"device":device, "cmd":Command.seek, "args":[0]})
          
         return "Playing "+name+" on "+device
 
