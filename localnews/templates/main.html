@@ -29,8 +29,9 @@
         <div class="pb-3  " >
                 <h4>Select a device to use:</h4>
 		<div class="btn-group">
-		    <button class="btn btn-secondary active">Living Room TV</button>
-		    <button class="btn btn-secondary">Bedroom TV</button>
+		    {% for device in devices %}
+		    <button class="btn btn-secondary device">{{ device }}</button>
+		    {% endfor %}
 		</div>
         </div>
     </div>

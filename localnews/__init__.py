@@ -29,10 +29,12 @@ def create_app(test_config=None):
     def main():
         recordings = [] 
         libpath = os.path.abspath( "/mnt/library" )
-        for f in os.listdir( libpath ):
+        for f in sorted(os.listdir( libpath )):
             if os.path.isdir( os.path.join( libpath,f ) ):
                 recordings.append( f )
-        return render_template('main.html', shows=recordings )
+
+        devices = sorted(client({"cmd":Command.list_devs}))
+        return render_template('main.html', shows=recordings, devices=devices )
 
     @app.route('/video/<path:filename>')
     def library(filename):

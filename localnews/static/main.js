@@ -27,12 +27,16 @@ function send_request(url){
 }
 
 function get_device_name(){
-    return document.querySelector("div.btn-group button.active").innerText;
+    /* Returns the name of the chromecast device which is currently selected
+     * by the DOM elements
+     */
+    return document.querySelector("button.device.active").innerText;
 }
 
 function bind_toggle(){
-    var bg = document.querySelector("div.btn-group");
-    var buttons = bg.querySelectorAll("button");
+    var buttons = document.querySelectorAll("button.device");
+    // By default, activate the first device in the list
+    buttons[0].classList.add("active");
     buttons.forEach(function(b){
         b.onclick = function(e){
             buttons.forEach(function(a){
