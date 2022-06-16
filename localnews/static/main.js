@@ -36,8 +36,12 @@ function get_device_name(){
 function bind_toggle(){
     var buttons = document.querySelectorAll("button.device");
     // By default, activate the first device in the list
-    buttons[0].classList.add("active");
     buttons.forEach(function(b){
+    	
+    	if ( b.innerText == "Living Room TV" ){
+		b.classList.add("active");
+	}
+
         b.onclick = function(e){
             buttons.forEach(function(a){
                 a.classList.remove("active"); 
