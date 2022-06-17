@@ -1,6 +1,6 @@
 {
-   "name": "Episode Player",
-   "short_name": "Episodes",
+   "name": "Local News Player",
+   "short_name": "News",
    "display": "standalone",
    "background_color": "#fff",
    "icons": [{
