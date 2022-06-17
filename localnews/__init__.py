@@ -33,7 +33,7 @@ def create_app(test_config=None):
             if os.path.isdir( os.path.join( libpath,f ) ):
                 recordings.append( f )
 
-        devices = sorted(client({"cmd":Command.find_devs,"args":[True]}))
+        devices = sorted(client({"cmd":Command.find_devs}))
         return render_template('main.html', shows=recordings, devices=devices )
 
     @app.route('/video/<path:filename>')
